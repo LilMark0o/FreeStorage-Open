@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  redis:
+    image: redis:latest
+
+  web:
+    build: .
+    command: >
+      sh -c "pip install gunicorn && pip install whitenoise && python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && gunicorn free_storage.wsgi:application --bind 0.0.0.0:8080 --workers 3 --worker-class gevent --timeout 300"
+
+
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    env_file: .env
+
+    depends_on:
+      - redis
+
+  celery-upload-worker:
+    build: .
+    command: celery -A free_storage worker -Q upload_queue -n upload_worker@%h
+    env_file: .env
+    depends_on:
+      - redis
+    volumes:
+    - .:/app  # Same volume to ensure it has access to all files, including 'temp'
+
+
+  celery-download-worker:
+    build: .
+    command: celery -A free_storage worker -Q download_queue -n download_worker@%h
+    env_file: .env
+    depends_on:
+      - redis
+    volumes:
+    - .:/app  # Same volume to ensure it has access to all files, including 'temp'

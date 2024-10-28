@@ -1,0 +1,50 @@
+<div class="container mt-3">
+  <h2 class="text-center mb-4">Your Notifications</h2>
+
+  <!-- New Notifications Section -->
+  {% if notificationsAtAll%}
+  <!--prettier-ignore-->
+  {% if newNotificacions %} {% for notification in newNotificacions %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{ notification.message }}</strong>
+    <p class="mb-0 mt-2">
+      <small class="text-muted">Received: {{ notification.date }}</small>
+    </p>
+    {% if notification.file %}
+    <a
+      href="{% url 'file_detail' notification.file.id %}"
+      class="btn btn-outline-success mt-2"
+    >
+      Check file
+    </a>
+    {% endif %}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+  {% endfor %} {% endif %}
+
+  <!-- Old Notifications Section -->
+  {% if oldNotificacions %} {% for notificationOld in oldNotificacions %}
+  <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+    <strong>{{ notificationOld.message }}</strong>
+    <p class="mb-0 mt-2">
+      <small class="text-muted">Received: {{ notificationOld.date }}</small>
+    </p>
+    {% if notificationOld.file %}
+    <a
+      href="{% url 'file_detail' notificationOld.file.id %}"
+      class="btn btn-outline-secondary mt-2"
+      >Check file</a
+    >
+    {% endif %}
+  </div>
+  {% endfor %} {% endif %} {% else %}
+  <div class="text-center">
+    <div class="alert alert-info" role="alert"> No notifications, yet. </div>
+  </div>
+  {% endif %}
+</div>

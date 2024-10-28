@@ -1,0 +1,47 @@
+{% extends 'sideBar.html' %}
+<!--prettier-ignore-->
+{% block small_content_area %}
+{%include 'upload/uploadSource.html'%} {% endblock %}
+<!--prettier-ignore-->
+
+{% block large_content_area %}
+{%include 'upload/uploadSource.html'%}
+<script>
+  let dropFileArea = document.getElementById("dropFileArea");
+  let fileInput = document.getElementById("fileInput");
+
+  // Prevent default behavior (Prevent file from being opened)
+  ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
+    dropFileArea.addEventListener(eventName, (e) => e.preventDefault(), false);
+    dropFileArea.addEventListener(eventName, (e) => e.stopPropagation(), false);
+  });
+
+  // Highlight drop area when item is dragged over it
+  ["dragenter", "dragover"].forEach((eventName) => {
+    dropFileArea.addEventListener(
+      eventName,
+      () => {
+        dropFileArea.classList.add("border-primary");
+        dropFileArea.classList.add("bg-light");
+      },
+      false
+    );
+  });
+
+  ["dragleave", "drop"].forEach((eventName) => {
+    dropFileArea.addEventListener(
+      eventName,
+      () => {
+        dropFileArea.classList.remove("border-primary");
+        dropFileArea.classList.remove("bg-light");
+      },
+      false
+    );
+  });
+
+  // Handle dropped files
+  dropFileArea.addEventListener("drop", (e) => {
+    fileInput.files = e.dataTransfer.files; // Assign dropped files to input
+  });
+</script>
+{% endblock %}

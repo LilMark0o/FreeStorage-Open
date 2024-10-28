@@ -1,0 +1,38 @@
+/* Custom styles for downbar */
+.downbar {
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.downbar .nav-link {
+    font-size: 14px;
+    padding: 10px 5px;
+    text-align: center;
+}
+
+.downbar .nav-link i {
+    display: block;
+    font-size: 20px;
+}
+
+.downbar .nav-link:hover {
+    background-color: #495057;
+    /* Optional hover effect */
+}
+
+/* Sidebar styles */
+.sidebar {
+    border-right: 1px solid #ddd;
+}
+
+.sidebar .list-group-item {
+    font-size: 16px;
+}
+
+.sidebar .list-group-item a {
+    text-decoration: none;
+    color: #333;
+}
+
+.sidebar .list-group-item:hover {
+    background-color: #f8f9fa;
+}

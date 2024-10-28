@@ -1,0 +1,8 @@
+- add a '.env' file with the telegram credentials
+- change the 'settings.SITE_URL'
+
+- when made all the docker container stuff, run:
+mkdir uploads
+mkdir downloads
+mkdir temp
+docker build --no-cache -t django-production .

@@ -1,0 +1,38 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Upload New File</h2>
+
+  {% if messages %} {% for message in messages %}
+  <div
+    class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}"
+  >
+    {{ message }}
+  </div>
+  {% endfor %} {% endif %}
+</div>
+
+<!-- Drag and Drop File Upload Section -->
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card border-dashed border-3">
+      <div class="card-body text-center">
+        <i class="bi bi-cloud-arrow-up-fill fs-1"></i>
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="fileInput" class="form-label"
+              >Choose files to upload</label
+            >
+            <input
+              class="form-control"
+              type="file"
+              id="fileInput"
+              name="file"
+              multiple
+            />
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg">Upload</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

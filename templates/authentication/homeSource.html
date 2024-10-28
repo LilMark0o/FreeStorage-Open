@@ -1,0 +1,94 @@
+<div class="container mt-3">
+  <!-- Header section -->
+  <div class="row mb-4">
+    <div class="col">
+      <h2 class="text-center">Welcome back!</h2>
+      <p class="text-center"
+        >Here's a quick overview of your recent activity and key actions.</p
+      >
+    </div>
+  </div>
+
+  {% if messages %} {% for message in messages %}
+  <div
+    class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}"
+  >
+    {{ message }}
+  </div>
+  {% endfor %} {% endif %}
+
+  <div class="row">
+    <!-- Stats cards -->
+    <div class="col-lg-3 col-md-6 mb-3">
+      <div
+        class="card border"
+        style="background-color: #a3c4d7; border-color: black"
+      >
+        <!-- Pastel Blue -->
+        <div class="card-body">
+          <h5 class="card-title">Files Uploaded</h5>
+          <p class="card-text">{{ numFiles }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+      <div
+        class="card border"
+        style="background-color: #b9e4c9; border-color: black"
+      >
+        <!-- Pastel Green -->
+        <div class="card-body">
+          <h5 class="card-title">Storage Used</h5>
+          <p class="card-text">{{storageUsed}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+      <div
+        class="card border"
+        style="background-color: #f6c5c0; border-color: black"
+      >
+        <!-- Pastel Coral -->
+        <div class="card-body">
+          <h5 class="card-title">Remaining Storage</h5>
+          <p class="card-text">{{restSize}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+      <div
+        class="card border"
+        style="background-color: #ffe3d3; border-color: black"
+      >
+        <!-- Pastel Peach -->
+        <div class="card-body">
+          <h5 class="card-title">Last Upload</h5>
+          <p class="card-text">{{lastUpdate}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions Buttons -->
+  <div class="row mt-4">
+    <div class="col-lg-4 col-md-6 mb-3">
+      <a
+        href="{% url 'uploadFile' %}"
+        class="btn btn-outline-primary btn-lg w-100"
+        >Upload New File</a
+      >
+    </div>
+    <div class="col-lg-4 col-md-6 mb-3">
+      <a href="{% url 'files' %}" class="btn btn-outline-success btn-lg w-100"
+        >Check Your Files</a
+      >
+    </div>
+    <div class="col-lg-4 col-md-6 mb-3">
+      <a
+        href="{% url 'shared_files_list' %}"
+        class="btn btn-outline-dark btn-lg w-100"
+        >Go to Shared Files</a
+      >
+    </div>
+  </div>
+</div>

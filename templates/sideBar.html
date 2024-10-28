@@ -1,0 +1,252 @@
+<!-- templates/sidebar.html -->
+{% extends 'base.html' %} {% load static %} {% block content %}
+<style>
+  /* Bottom navigation bar styling for small screens */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px; /* Adjust the height as needed */
+    display: flex;
+    justify-content: space-between; /* Change to space-between for equal spacing */
+    align-items: center;
+    z-index: 1000; /* Ensures the bar stays on top */
+    border-top: 1px solid #ccc;
+  }
+
+  .bottom-nav .nav {
+    display: flex;
+    justify-content: space-between; /* Ensure items are spaced evenly */
+    flex-wrap: nowrap; /* Prevent wrapping */
+    width: 100%; /* Ensures the nav items take the full width */
+  }
+
+  .bottom-nav .nav-item {
+    flex: 1; /* Allow each item to take equal space */
+    text-align: center; /* Center text */
+  }
+
+  .nav-item i {
+    font-size: 24px; /* Adjust the icon size as needed */
+  }
+
+  .nav-link {
+    text-align: center;
+    color: #fff;
+    transition: color 0.2s ease;
+  }
+
+  /* Make sure the content above the navbar doesn't overlap */
+  body {
+    padding-bottom: 60px; /* Adjust padding to match navbar height */
+  }
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
+<script>
+  window.onload = function () {
+    if (
+      window.innerHeight / window.innerWidth > 1.2 ||
+      (window.innerWidth < 400 && window.innerHeight < 400)
+    ) {
+      document.getElementById("small-screen-content").style.display = "block";
+      document.getElementById("large-screen-content").style.display = "none";
+    } else {
+      document.getElementById("small-screen-content").style.display = "none";
+      document.getElementById("large-screen-content").style.display = "block";
+    }
+  };
+</script>
+<div id="small-screen-content" style="display: none">
+  <div class="container">
+    <!-- Bloque de contenido -->
+    <div class="row">
+      <div class="col mt-3 mb-5">
+        <div class="mb-5"> {% block small_content_area %} {% endblock %} </div>
+      </div>
+    </div>
+
+    <!-- Barra de navegación inferior -->
+    <div class="bottom-nav bg-dark text-white fixed-bottom py-2">
+      <ul class="nav justify-content-around">
+        <!-- Botón Inicio -->
+        <li class="nav-item">
+          <a href="{% url 'home' %}" class="nav-link text-white text-center">
+            <i class="bi-house fs-3 d-block"></i>
+          </a>
+        </li>
+        <!-- Botón Archivos -->
+        <li class="nav-item">
+          <a href="{% url 'files' %}" class="nav-link text-white text-center">
+            <i class="bi-file-earmark fs-3 d-block"></i>
+          </a>
+        </li>
+        <!-- Botón Subir -->
+        <li class="nav-item">
+          <a
+            href="{% url 'uploadFile' %}"
+            class="nav-link text-white text-center"
+          >
+            <i class="bi-file-earmark-arrow-up fs-3 d-block"></i>
+          </a>
+        </li>
+        <!-- Botón Perfil -->
+        <li class="nav-item">
+          <a
+            href="{% url 'notifications' %}"
+            class="nav-link text-white text-center position-relative"
+          >
+            <div class="position-relative">
+              <i class="bi bi-bell fs-3 d-block"></i>
+              {% if notification_count > 0 %}
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+              >
+                {% if notification_count > 9 %} +9
+                <!--prettier-ignore-->
+                {% else %} {{ notification_count }} {% endif %}
+              </span>
+              {% endif %}
+            </div>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{% url 'profile' %}" class="nav-link text-white text-center">
+            <i class="bi-person-circle fs-3 d-block"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="large-screen-content" style="display: none">
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <!-- Sticky sidebar -->
+      <div
+        class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark"
+        style="position: sticky; top: 0; height: 100vh"
+      >
+        <div
+          class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100"
+        >
+          <ul
+            class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+            id="menu"
+          >
+            <li>
+              <a
+                href="{% url 'home' %}"
+                class="nav-link px-0 align-middle text-white"
+              >
+                <i class="fs-4 bi-house text-white"></i>
+                <span class="ms-1 d-none d-sm-inline">Home</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="{% url 'files' %}"
+                class="nav-link px-0 align-middle text-white"
+              >
+                <i class="fs-4 bi-file-earmark text-white"></i>
+                <span class="ms-1 d-none d-sm-inline">Check files</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="{% url 'uploadFile' %}"
+                class="nav-link px-0 align-middle text-white"
+              >
+                <i class="fs-4 bi-file-earmark-arrow-up text-white"></i>
+                <span class="ms-1 d-none d-sm-inline">Upload new file</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="{% url 'shared_files_list' %}"
+                class="nav-link px-0 align-middle text-white"
+              >
+                <i class="fs-4 bi bi-share text-white"></i>
+                <span class="ms-1 d-none d-sm-inline">Shared files</span>
+              </a>
+            </li>
+          </ul>
+          <hr />
+          <div class="dropdown pb-4 pe-5">
+            <a
+              href="#"
+              class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+              id="dropdownUser1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                src="{% static 'default_pp.jpg' %}"
+                alt="hugenerd"
+                width="30"
+                height="30"
+                class="rounded-circle"
+              />
+              <span class="d-none d-sm-inline mx-1"
+                >{{ user.username|truncatechars:12 }}</span
+              >
+
+              <!-- Badge showing number of new notifications -->
+              {% if notification_count > 0 %}
+              <!--prettier-ignore-->
+              <span class="badge bg-danger ms-2">
+              {% if notification_count > 9 %} +9
+              <!--prettier-ignore-->
+              {% else %} {{ notification_count }} {% endif %}
+              </span>
+              {% endif %}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="{% url 'notifications' %}"
+                >
+                  <!-- Notification Bell Icon -->
+                  <!-- Bootstrap Icons bell -->
+                  Notifications
+                  <!-- Badge showing number of new notifications -->
+                  {% if notification_count > 0 %}
+                  <!--prettier-ignore-->
+                  {% if notification_count > 9 %} (+9)
+                  <!--prettier-ignore-->
+                  {% else %} ({{ notification_count }}) {% endif %}
+                  {% endif %}
+                </a>
+              </li>
+              <li
+                ><a class="dropdown-item" href="{% url 'profile' %}"
+                  >Profile</a
+                ></li
+              >
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <form method="POST" action="{% url 'logout' %}">
+                  {% csrf_token %}
+                  <button type="submit" class="dropdown-item">Sign out</button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main content area -->
+      <div class="col my-3">
+        {% block large_content_area %} {% endblock %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

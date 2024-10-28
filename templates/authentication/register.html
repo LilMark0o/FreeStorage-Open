@@ -1,0 +1,117 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <h2 class="text-center mb-4">Register</h2>
+      <form method="POST" class="border p-4 rounded shadow-sm bg-light">
+        {% csrf_token %}
+
+        <!-- Display non-field errors -->
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger mb-3">
+          <ul class="mb-0">
+            {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+        <div class="form-group mb-3">
+          <label for="{{ form.username.id_for_label }}" class="form-label"
+            >Username:</label
+          >
+          <input
+            type="text"
+            name="{{ form.username.name }}"
+            id="{{ form.username.id_for_label }}"
+            class="form-control"
+            value="{{ form.username.value|default_if_none:'' }}"
+          />
+          {% if form.username.errors %}
+          <div class="text-danger mt-1">
+            {% for error in form.username.errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="{{ form.email.id_for_label }}" class="form-label"
+            >Email:</label
+          >
+          <input
+            type="email"
+            name="{{ form.email.name }}"
+            id="{{ form.email.id_for_label }}"
+            class="form-control"
+            value="{{ form.email.value|default_if_none:'' }}"
+          />
+          {% if form.email.errors %}
+          <div class="text-danger mt-1">
+            {% for error in form.email.errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="form-group mb-4">
+          <label for="{{ form.password1.id_for_label }}" class="form-label"
+            >Password:</label
+          >
+          <input
+            type="password"
+            name="{{ form.password1.name }}"
+            id="{{ form.password1.id_for_label }}"
+            class="form-control"
+            value="{{ form.password1.value|default_if_none:'' }}"
+          />
+          {% if form.password1.errors %}
+          <div class="text-danger mt-1">
+            {% for error in form.password1.errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="form-group mb-4">
+          <label for="{{ form.password2.id_for_label }}" class="form-label"
+            >Confirm Password:</label
+          >
+          <input
+            type="password"
+            name="{{ form.password2.name }}"
+            id="{{ form.password2.id_for_label }}"
+            class="form-control"
+            value="{{ form.password2.value|default_if_none:'' }}"
+          />
+          {% if form.password2.errors %}
+          <div class="text-danger mt-1">
+            {% for error in form.password2.errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+          {% endif %}
+          <small class="form-text text-muted"
+            >{{ form.password2.help_text }}</small
+          >
+        </div>
+
+        <div class="form-group text-center mb-4">
+          <button type="submit" class="btn btn-primary btn-lg">Register</button>
+        </div>
+      </form>
+
+      <div class="text-center mt-4">
+        <p class="mb-0"> Already have an account? </p>
+        <a href="{% url 'login' %}" class="btn btn-secondary btn-m my-3"
+          >Login here</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Free Storage{% endblock %}</title>
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'justLogoBig.png' %}" />
+
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="#" class="logo d-flex align-items-center me-auto">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <h1 class="sitename">Free Storage</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="#" class="active">Home<br></a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#about-alt">How to use</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a class="btn-getstarted" href="{% url 'register' %}">Get Started</a>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section">
+
+      <img src="{% static 'assets/img/hero-bg-abstract.jpg' %}" alt="" data-aos="fade-in" class="">
+
+      <div class="container">
+        <div class="row justify-content-center" data-aos="zoom-out">
+          <div class="col-xl-7 col-lg-9 text-center">
+            <h1>Free Storage</h1>
+            <p>Upload and download files without limits* for free. Share links with friends to download files for the
+              time you
+              choose!</p>
+          </div>
+        </div>
+        <div class="text-center" data-aos="zoom-out" data-aos-delay="100">
+          <a href="{% url 'register' %}" class="btn-get-started">Get Started</a>
+        </div>
+
+        <div class="row gy-4 mt-5">
+          <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="100">
+            <div class="icon-box">
+              <div class="icon"><i class="bi bi-upload"></i></div>
+              <h4 class="title">Unlimited Uploads</h4>
+              <p class="description">Upload files of any size and type without limits, making it easy to store
+                everything you
+                need.</p>
+            </div>
+          </div><!--End Icon Box -->
+
+          <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="200">
+            <div class="icon-box">
+              <div class="icon"><i class="bi bi-download"></i></div>
+              <h4 class="title">Easy Downloads</h4>
+              <p class="description">Share files with friends effortlessly, allowing them to download directly without
+                any
+                hassle.</p>
+            </div>
+          </div><!--End Icon Box -->
+
+          <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="300">
+            <div class="icon-box">
+              <div class="icon"><i class="bi bi-link-45deg"></i></div>
+              <h4 class="title">Shareable Links</h4>
+              <p class="description">Generate shareable links for your files, so you can control who accesses your data.
+              </p>
+            </div>
+          </div><!--End Icon Box -->
+
+          <div class="col-md-6 col-lg-3" data-aos="zoom-out" data-aos-delay="400">
+            <div class="icon-box">
+              <div class="icon"><i class="bi bi-clock"></i></div>
+              <h4 class="title">Custom Expiration</h4>
+              <p class="description">Set expiration dates for your shared links to keep your files secure and organized.
+              </p>
+            </div>
+          </div><!--End Icon Box -->
+        </div>
+
+
+      </div>
+
+    </section><!-- /Hero Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>About Us<br></h2>
+        <p>Free Storage: A free open-source project to empower users with limitless file storage and sharing
+          capabilities.
+        </p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+            <p>
+              Free Storage is a project designed to provide users with a reliable and unlimited way to upload, store,
+              and
+              share files online. Developed by me, Marco Alejandro Ramírez Camacho, a Systems Engineering and Computer
+              Science student from the University of Los Andes, this platform aims to make file management seamless and
+              efficient for everyone.
+            </p>
+            <ul>
+              <li><i class="bi bi-check2-circle"></i> <span>Open-source project, welcoming contributions from the
+                  community.</span></li>
+              <li><i class="bi bi-check2-circle"></i> <span>Built with a focus on user experience and data
+                  security.</span>
+              </li>
+              <li><i class="bi bi-check2-circle"></i> <span>Empowering users to share files easily with friends and
+                  family.</span></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+            <p>
+              With a background in programming, databases, and machine learning, I've developed this platform to bridge
+              the
+              gap between user needs and technological solutions. My experience includes optimizing data models and
+              analyzing large datasets, which enhances the performance and reliability of Free Storage.
+            </p>
+            <p>
+              Join us in transforming the way you store and share your files—safely, freely, and without limits!
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- /About Section -->
+
+    <!-- Stats Section -->
+    <section id="stats" class="stats section light-background">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span data-purecounter-start="0" data-purecounter-end="{{totalusers}}" data-purecounter-duration="1"
+                class="purecounter"></span>
+              <p>Clients</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-4 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span data-purecounter-start="0" data-purecounter-end="{{totalfiles}}" data-purecounter-duration="1"
+                class="purecounter"></span>
+              <p>Files</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-4 col-md-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span>{{totalSizeFiles}}</span>
+              <p>Total size of files in the app</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Stats Section -->
+
+    <!-- About Alt Section -->
+    <!-- About Alt Section -->
+    <section id="about-alt" class="about-alt section">
+
+      <div class="container">
+
+        <div class="row gy-4">
+          <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="100">
+            <img src="{% static 'assets/img/about.jpg' %}" class="img-fluid" alt="">
+            <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a>
+          </div>
+          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="200">
+            <h3>Experience the Simplicity of Free Storage</h3>
+            <p class="fst-italic">
+              Our web app is designed with user experience in mind, making it extremely intuitive and easy to navigate.
+              Whether you are uploading files or sharing them with friends and family, the process is seamless and
+              straightforward.
+            </p>
+            <ul>
+              <li><i class="bi bi-check2-all"></i> <span>Effortless file uploads with just a few clicks.</span></li>
+              <li><i class="bi bi-check2-all"></i> <span>Instantly share files using simple links.</span></li>
+              <li><i class="bi bi-check2-all"></i> <span>Robust features that ensure your data is secure and easily
+                  accessible.</span></li>
+            </ul>
+            <p>
+              In this video, all the basic features of the app are showcased, demonstrating how you can efficiently
+              manage
+              your files. With Free Storage, you can focus on what matters most without worrying about storage limits or
+              complicated procedures. Explore the ease of use and discover why users love Free Storage!
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /About Alt Section -->
+
+
+
+    <footer id="footer" class="footer light-background">
+
+      <div class="container footer-top">
+        <div class="row gy-4">
+          <div class="col-lg-6 col-md-12 footer-about">
+            <a href="{% url 'home' %}" class="logo d-flex align-items-center">
+              <span class="sitename">Free Storage App</span>
+            </a>
+            <p>Offering free and secure storage solutions for your files, making it easy to access and manage your data
+              anytime, anywhere.</p>
+            <div class="social-links d-flex mt-4">
+              <a href="https://www.linkedin.com/in/marco-alejandro-ramirez/" target="_blank" class="me-3"><i
+                  class="bi bi-linkedin"></i></a>
+              <a href="https://github.com/LilMark0o" target="_blank"><i class="bi bi-github"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-12 footer-contact text-center text-md-start">
+            <h4>Contact Us</h4>
+            <p>Bogotá, Colombia</p>
+            <p class="mt-4"><strong>Phone:</strong> <span>+57 (321) 433-0135</span></p>
+            <p><strong>Email:</strong> <span>marcoalejandroramirezc@gmail.com</span></p>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="container copyright text-center mt-4">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">Free Storage App</strong> <span>All Rights
+            Reserved</span>
+        </p>
+      </div>
+
+    </footer>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+    <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+
+    <!-- Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,189 @@
+<div class="container mt-3">
+  <div class="d-flex justify-content-end justify-content-md-start">
+    <a href="{% url 'files' %}" class="btn btn-outline-secondary mb-3">Back</a>
+  </div>
+  <h2 class="text-center mb-4">File Details: {{ file.file_name }}</h2>
+
+  {% if messages %} {% for message in messages %}
+  <div
+    class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}"
+  >
+    {{ message }}
+  </div>
+  {% endfor %} {% endif %}
+
+  <div class="card border-dashed border-3 mb-4">
+    <div class="card-body">
+      <h5 class="card-title">File Information</h5>
+      <p class="card-text">
+        <strong>Upload Date:</strong> {{ file.date }}<br />
+        <strong>Size:</strong> {{ file.size }}<br />
+        <strong>Uploaded Successfully:</strong>
+        <!--prettier-ignore-->
+        {% if file.uploadedSuccessfully%}
+        <!--prettier-ignore-->
+        Yes {% else %} No {% endif %}<br />
+        <strong>Uploading:</strong> {% if file.uploading %} Yes
+        <!--prettier-ignore-->
+        {% else %} No {% endif %}
+      </p>
+    </div>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-header text-center">
+      <h5 class="card-title mb-0">Tags</h5>
+    </div>
+    <div class="text-center mb-3">
+      <div class="mt-3">
+        {% if file.hasTags %}
+        <div class="d-flex flex-wrap justify-content-center">
+          {% for tag in file.tags_list %}
+          <span
+            class="badge"
+            style="
+              background-color: #6391f4;
+              margin: 5px;
+              padding: 10px;
+              cursor: pointer;
+              transition: background-color 0.3s;
+            "
+            title="Click the tag to delete it"
+            onclick="document.getElementById('delete-tag-{{ tag.id }}').submit();"
+          >
+            {{ tag.tag }}
+          </span>
+          <form
+            id="delete-tag-{{ tag.id }}"
+            action="{% url 'delete_tag' file.id tag.id %}"
+            method="POST"
+            style="display: none"
+          >
+            {% csrf_token %}
+          </form>
+          {% endfor %}
+        </div>
+        <p class="text-muted" style="font-size: 0.9rem"
+          >Click the tag to delete it.</p
+        >
+        {% else %}
+        <p>No tags added.</p>
+        {% endif %}
+      </div>
+
+      <div class="mb-4 px-3 pt-3">
+        <h5 class="text-center">Add a New Tag</h5>
+        <form action="{% url 'add_tag' file.id %}" method="POST">
+          {% csrf_token %}
+          <div class="input-group">
+            <input
+              type="text"
+              name="tag"
+              class="form-control"
+              list="existing-tags"
+              placeholder="Enter a new tag"
+              required
+            />
+            <datalist id="existing-tags">
+              {% for tag in user_tags %}
+              <option value="{{ tag.tag }}"></option>
+              {% endfor %}
+            </datalist>
+            <button class="btn btn-outline-primary" type="submit"
+              >Add Tag</button
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {% if file.link %}
+  <div class="card mb-4">
+    <div class="card-header text-center">
+      <h5 class="card-title mb-0">Access Your Shared File</h5>
+    </div>
+    <div class="card-body text-center">
+      <p class="card-text"><strong>Your file has an active link:</strong></p>
+      <a href="{% url 'shared_files_list' %}" class="btn btn-primary"
+        >Check links here</a
+      >
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="card mb-4">
+    <div class="card-header text-center">
+      <h5 class="card-title mb-0">Share This File</h5>
+    </div>
+    <div class="card-body">
+      <form method="POST" action="{% url 'share_file' file.id %}">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+          <label for="expiration_date">Expiration Date (optional):</label>
+          <input
+            type="datetime-local"
+            name="expiration_date"
+            id="expiration_date"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="max_downloads">Max Downloads (optional):</label>
+          <input
+            type="number"
+            name="max_downloads"
+            id="max_downloads"
+            class="form-control"
+            min="1"
+            placeholder="Set a limit"
+          />
+          <small class="form-text text-muted"
+            >Defaul value will be 1 if not Allow Unlimited.</small
+          >
+        </div>
+        <div class="form-check mb-3">
+          <input
+            type="checkbox"
+            name="limitless_downloads"
+            id="limitless_downloads"
+            class="form-check-input"
+          />
+          <label class="form-check-label" for="limitless_downloads"
+            >Allow Unlimited Downloads</label
+          >
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-success">
+            <i class="bi bi-share-fill"></i>
+            Share File
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center mb-3">
+    <form
+      action="{% url 'download_file' file.id %}"
+      method="POST"
+      style="display: inline"
+    >
+      {% csrf_token %}
+      <button type="submit" class="btn btn-outline-success mx-1"
+        ><i class="bi bi-cloud-arrow-down-fill"></i> Download</button
+      >
+    </form>
+    <form
+      action="{% url 'delete_file' file.id %}"
+      method="POST"
+      style="display: inline"
+      onsubmit="return confirm('Are you sure you want to delete this file?');"
+    >
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger mx-1"
+        ><i class="bi bi-trash-fill"></i> Delete</button
+      >
+    </form>
+  </div>
+</div>

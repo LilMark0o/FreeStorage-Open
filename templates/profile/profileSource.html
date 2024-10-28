@@ -1,0 +1,127 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <!-- Profile Header -->
+      <div class="text-center mb-5">
+        <h2>Profile</h2>
+        <p class="text-muted">Manage your account information</p>
+      </div>
+
+      <!-- Flash Messages -->
+      {% if messages %} {% for message in messages %}
+      <div
+        class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}"
+      >
+        {{ message }}
+      </div>
+      {% endfor %} {% endif %}
+
+      <!-- Profile Card -->
+      <div class="card shadow-sm border-0 rounded-lg">
+        <div class="card-body p-4">
+          <h5 class="card-title text-center mb-4">User Information</h5>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <p class="mb-1"><strong>Username:</strong></p>
+              <p class="text-muted">{{ user.username }}</p>
+            </div>
+            <div class="col-md-6 mb-3">
+              <p class="mb-1"><strong>Email:</strong></p>
+              <p class="text-muted">{{ user.email }}</p>
+            </div>
+            <div class="col-md-6 mb-3">
+              <p class="mb-1"><strong>First Name:</strong></p>
+              <p class="text-muted">{{ user.first_name }}</p>
+            </div>
+            <div class="col-md-6 mb-3">
+              <p class="mb-1"><strong>Last Name:</strong></p>
+              <p class="text-muted">{{ user.last_name }}</p>
+            </div>
+            <div class="col-md-12 mb-3">
+              <p class="mb-1"
+                ><strong>Authenticated:</strong>
+                {% if user.userprofile.authenticated %}
+                <span class="badge" style="background-color: #086c62">Yes</span>
+                {% else %}
+                <span class="badge" style="background-color: #7f0000">No</span>
+                {% endif %}
+              </p></div
+            >
+          </div>
+
+          <!-- Storage Info Section -->
+          <div class="mt-4">
+            <h5 class="card-title text-center mb-4">Storage Information </h5>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <p class="mb-1"><strong>Total Storage:</strong></p>
+                <p class="text-muted"
+                  >{{ user.userprofile.storageSize|filesizeformat }}</p
+                >
+              </div>
+              <div class="col-md-6 mb-3">
+                <p class="mb-1"><strong>Max File Size:</strong></p>
+                <p class="text-muted"
+                  >{{ user.userprofile.sizePerFile|filesizeformat }}</p
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Actions -->
+        <div class="card-footer bg-white border-top-0 text-center py-4">
+          <div class="row">
+            <!-- Edit Profile Button -->
+            <div class="col-md-4 mb-2">
+              <a
+                href="{% url 'update_profile' user.id %}"
+                class="btn btn-outline-primary btn-block"
+              >
+                <i class="bi bi-pencil-square mr-2"></i>Edit Profile
+              </a>
+            </div>
+
+            <!-- Delete Account Button -->
+            <div class="col-md-4 mb-2">
+              <form
+                action="{% url 'delete_account' user.id %}"
+                method="POST"
+                onsubmit="return confirm('Are you sure you want to delete your account?');"
+              >
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-danger btn-block">
+                  <i class="bi bi-trash-fill mr-2"></i>Delete Account
+                </button>
+              </form>
+            </div>
+
+            <!-- Authenticate Button -->
+            <div class="col-md-4 mb-2">
+              {% if not user.userprofile.authenticated %}
+              <a
+                href="{% url 'authenticate_user' user.id %}"
+                class="btn btn-outline-success btn-block"
+              >
+                <i class="bi bi-check-circle mr-2"></i>Authenticate
+              </a>
+              {% else %}
+              <button class="btn btn-outline-secondary btn-block" disabled>
+                <i class="bi bi-check-circle-fill mr-2"></i>Authenticated
+              </button>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-4">
+        <form action="{% url 'logout' %}" method="post" style="display: inline">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">
+            <i class="bi bi-box-arrow-right mr-2"></i>Logout
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

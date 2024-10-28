@@ -1,0 +1,15 @@
+In one terminal:
+celery -A free_storage worker -Q upload_queue -n upload_worker@%h
+
+In another one:
+celery -A free_storage worker -Q download_queue -n download_worker@%h
+
+celery -A free_storage purge -Q download_queue -f
+celery -A free_storage purge -Q upload_queue -f
+
+In another one:
+python manage.py runserver 0.0.0.0:8080
+
+If you want to run it like a tunnel, use:
+
+cloudflared tunnel -url http://0.0.0.0:8080/

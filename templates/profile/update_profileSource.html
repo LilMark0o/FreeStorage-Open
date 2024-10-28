@@ -1,0 +1,76 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card shadow-sm border-0 rounded-lg">
+        <div class="card-body p-4">
+          <h4 class="card-title text-center mb-4">Update Profile</h4>
+
+          <!-- Display any messages -->
+          {% if messages %} {% for message in messages %}
+          <div
+            class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %}"
+          >
+            {{ message }}
+          </div>
+          {% endfor %} {% endif %}
+
+          <!-- Profile Update Form -->
+          <form method="POST" id="profile-update-form">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+              <label for="username">Username</label>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                name="username"
+                value="{{ user.username }}"
+                required
+              />
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                value="{{ user.email }}"
+                required
+              />
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="first_name">First Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="first_name"
+                name="first_name"
+                value="{{ user.first_name }}"
+              />
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="last_name">Last Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="last_name"
+                name="last_name"
+                value="{{ user.last_name }}"
+              />
+            </div>
+
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-primary btn-block">
+                <i class="bi bi-save"></i> Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

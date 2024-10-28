@@ -1,0 +1,158 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Your Shared Files</h2>
+
+  <!-- Display any messages -->
+  {% if messages %} {% for message in messages %}
+  <div
+    class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %} alert-dismissible fade show"
+    role="alert"
+  >
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endfor %} {% endif %} {% if nini %}
+  <div class="alert alert-info text-center" role="alert">
+    You have not shared any file, yet.
+  </div>
+  {% else %}
+  <!-- Usable Shared Files Table -->
+  <h4 class="my-4 text-center">Usable Shared Files</h4>
+  <div class="table-responsive">
+    {% if usable %}
+    <table class="table table-bordered table-striped table-hover">
+      <thead class="thead-light text-center">
+        <tr>
+          <th>File Name</th>
+          <th>Share Link</th>
+          <th>Expiration</th>
+          <th>Downloads</th>
+          <th>Actions</th>
+          <!-- New Actions column -->
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        {% for shared_file in usable %}
+        <tr>
+          <td>{{ shared_file.file.file_name }}</td>
+          <td class="text-center">
+            <button
+              class="btn btn-outline-secondary copy-link"
+              data-link="{{SITE_URL}}/app/files/shared/{{ shared_file.share_link }}"
+            >
+              Copy Link
+            </button>
+          </td>
+          <td>
+            <!--prettier-ignore-->
+            {% if shared_file.expiration_date %} {{ shared_file.expiration_date }} {% else %} No expiration {% endif %}
+          </td>
+          <td>
+            {% if shared_file.limitless_downloads%}
+            <!--prettier-ignore-->
+            {{ shared_file.downloads }} / Unlimited
+            {% else %}
+            <!--prettier-ignore-->
+            {{ shared_file.downloads }} / {{ shared_file.max_downloads }}
+             {% endif %}
+          </td>
+          <td>
+            <form
+              method="POST"
+              action="{% url 'delete_shared_file' shared_file.id %}"
+              style="display: inline"
+            >
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm"
+                >Delete</button
+              >
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-info text-center" role="alert">
+      No usable shared files available.
+    </div>
+    {% endif %}
+  </div>
+
+  {% if numOld != 0%}
+  <!-- Old Shared Files Table -->
+  <h4 class="my-4 text-center">Expired Shared Files</h4>
+  <div class="table-responsive">
+    {% if old %}
+    <table class="table table-bordered table-striped table-hover">
+      <thead class="thead-light text-center">
+        <tr>
+          <th>File Name</th>
+          <th>Expiration</th>
+          <th>Downloads</th>
+          <th>Actions</th>
+          <!-- New Actions column -->
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        {% for shared_file in old %}
+        <tr>
+          <td>{{ shared_file.file.file_name }}</td>
+          <td>
+            <!--prettier-ignore-->
+            {% if shared_file.expiration_date %} {{ shared_file.expiration_date }} {% else %} No expiration {% endif %}
+          </td>
+          <td>
+            <!--prettier-ignore-->
+            {{ shared_file.downloads }} / {% if shared_file.max_downloads %} {{ shared_file.max_downloads }} {% else %} Unlimited {% endif %}
+          </td>
+          <td>
+            <form
+              method="POST"
+              action="{% url 'delete_shared_file' shared_file.id %}"
+              style="display: inline"
+            >
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm"
+                >Delete</button
+              >
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-info text-center" role="alert">
+      No old shared files available.
+    </div>
+    {% endif %}
+  </div>
+  {% endif %} {% endif %}
+</div>
+
+<script>
+  // Function to copy text to clipboard
+  function copyToClipboard(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+  }
+
+  // Add click event listeners to copy link buttons
+  document.querySelectorAll(".copy-link").forEach((button) => {
+    button.addEventListener("click", function () {
+      const link = this.getAttribute("data-link");
+      copyToClipboard(link);
+      // Optional: Change button text temporarily after copying
+      this.innerText = "Copied!";
+      setTimeout(() => {
+        this.innerText = "Copy Link";
+      }, 2000);
+    });
+  });
+</script>
